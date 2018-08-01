@@ -1,11 +1,10 @@
 package calculator.semantics
 
-import scala.language.implicitConversions
-import org.scalacheck._
-import org.scalacheck.Prop.{forAll,BooleanOperators,throws}
-import Gen._
-import Arbitrary.arbitrary
 import calculator.ir._
+import org.scalacheck.Prop.{forAll, throws}
+import org.scalacheck._
+
+import scala.language.implicitConversions
 
 object CalcInterpreterSpec extends Properties("Interpreter") {
 
@@ -27,6 +26,17 @@ object CalcInterpreterSpec extends Properties("Interpreter") {
     
     property("addition") = forAll { (n1: Int, n2: Int) ⇒
       (Plus(Num(n1), Num(n2))) ~> (n1 + n2)   
-    } 
-    
+    }
+
+    property("subtraction") = forAll { (n1: Int, n2: Int) ⇒
+      (Minus(Num(n1), Num(n2))) ~> (n1 - n2)
+    }
+
+    property("multiplication") = forAll { (n1: Int, n2: Int) ⇒
+      (Multiply(Num(n1), Num(n2))) ~> (n1 * n2)
+    }
+
+    property("division") = forAll { (n1: Int, n2: Int) ⇒
+      (Division(Num(n1), Num(n2))) ~> (n1 / n2)
+    }
 }
